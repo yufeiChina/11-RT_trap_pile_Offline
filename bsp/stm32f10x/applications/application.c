@@ -102,7 +102,7 @@ int rt_application_init(void)
     TIM2_PWM_Init();
     ADC1_Init();        // AD采集初始化，DMA通道 
     
-    Error_init();
+//    Error_init();
     Led_init();         // 开灯线程   
     SupplyPower_init();	// 开供电线程
  //   energy_meter_init();// 开电能表线程

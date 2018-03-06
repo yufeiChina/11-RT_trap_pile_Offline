@@ -65,14 +65,14 @@ void close_LN(void)
 //³äµç×®×´Ì¬¼ì²â
 void SupplyPower_entry(void *s)
 {    
-    close_LN();
+//    close_LN();
     power_gate_init();  //¼ÌµçÆ÷³õÊ¼»¯ GPIOD
-    E_STOP_init(); 
+//    E_STOP_init(); 
     while(1)
     {    
         Check_Gun_Status();
         //³äµç×®µÄ×´Ì¬
-        Check_estop();
+//        Check_estop();
         
         switch (g_Status.supplypower)
         {

@@ -125,63 +125,7 @@ void Error_process(void *s)
         {
             switch(g_Status.sdst_error)
             {
-            case S_ERR_VOL_LESS:
-                if (g_Status.gun_status == SD_GUN_ST_OUT)
-                {
-                    g_Status.sdst_error = S_ERR_ST_NO;
-                    updata_err = 0;
-                }
-                else if (g_Status.clear_err_times == 4)
-                {
-                    g_Status.sdst_error = S_ERR_ST_NO;
-                    updata_err = 0;
-                }
-                break;
-            case S_ERR_VOL_BIGGER:
-                if (g_Status.gun_status == SD_GUN_ST_OUT)
-                {
-                    g_Status.sdst_error = S_ERR_ST_NO;
-                    updata_err = 0;
-                }
-                else if (g_Status.clear_err_times == 4)
-                {
-                    g_Status.sdst_error = S_ERR_ST_NO;
-                    updata_err = 0;
-                }
-                break;
-            case S_ERR_CURRENT_OVER:
-                if (g_Status.gun_status == SD_GUN_ST_OUT)
-                {
-                    g_Status.sdst_error = S_ERR_ST_NO;
-                    updata_err = 0;
-                }
-                else if (g_Status.gun_status == SD_GUN_ST_OUT)
-                {
-                    g_Status.sdst_error = S_ERR_ST_NO;
-                    updata_err = 0;
-                }
-                break;
-            case S_ERR_DIANNENG:
-                if (g_Status.clear_err_times)
-                {
-                    g_Status.sdst_error = S_ERR_ST_NO;
-                    updata_err = 0;
-                }
-                break;
-            case S_ERR_CP_VOL_LESS:
-                if (g_Status.gun_status == SD_GUN_ST_OUT)
-                {
-                    g_Status.sdst_error = S_ERR_ST_NO;
-                    updata_err = 0;
-                }
-                break;
-            case S_ERR_CPU_CARD:
-                if (g_Status.gun_status == SD_GUN_ST_OUT)
-                {
-                    g_Status.sdst_error = S_ERR_ST_NO;
-                    updata_err = 0;
-                }
-                break;
+             
             case S_ERR_E_STOP:
                 if (g_Status.gun_status == SD_GUN_ST_OUT)
                 {

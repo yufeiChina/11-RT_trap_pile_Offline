@@ -20,10 +20,7 @@ void sd_status_init(void)
     g_Status.supplypower = SPT_PILE_Init;
     g_Status.relay_status = RELAY_OFF;
     g_Status.svr_allow_suplly = SVR_ALLOW_SUPPLY_NO;
-    g_Status.swipe_card = SWIPE_CARD_NO;
-    g_Status.connect = GPRS_CONNECT;
-    g_Status.screen_page_chose = SCREEN_PAGE_LOGO;
-    
+      
     g_Status.led_status_red = LED_OFF;
     g_Status.led_status_yellow = LED_OFF;
     g_Status.led_status_blue = LED_OFF;

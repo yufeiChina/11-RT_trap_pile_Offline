@@ -40,6 +40,7 @@ void LED_GPIO_Config(void)
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
 	GPIO_SetBits(GPIOB, GPIO_Pin_5);	 // turn off yellow led
+    
 #endif
 }
 
@@ -60,21 +61,21 @@ void LED_ALL_ON(void)
 
 void LEDR_turn(void)
 {
-	GPIOE->ODR ^= GPIO_Pin_12;
+	GPIOA->ODR ^= GPIO_Pin_4;
 }
 
 void LEDB_turn(void)
 {
-	GPIOE->ODR ^= GPIO_Pin_8;
+	GPIOA->ODR ^= GPIO_Pin_6;
 }
 
 void LEDG_turn(void)
 {
-	GPIOE->ODR ^= GPIO_Pin_10;
+	GPIOA->ODR ^= GPIO_Pin_5;
 }
 void LEDY_turn(void)
 {
-	GPIOC->ODR ^= GPIO_Pin_5;
+	GPIOB->ODR ^= GPIO_Pin_5;
 }
 
 
@@ -92,7 +93,6 @@ void Set_led_status(void)
     if(g_Status.relay_status == RELAY_ON)
     {
         g_Status.led_status_green = LED_ON;
-        //g_Status.led_status_red = LED_FLASH4;
     }
 //    else if()     //Ë¢¿¨ÉÁË¸
 //    {
@@ -107,15 +107,18 @@ void Set_led_status(void)
     //À¶µÆ×´Ì¬
     if(g_Status.connect == GPRS_CONNECT)
     {
-        g_Status.led_status_blue = LED_FLASH_HARRY;
+//        g_Status.led_status_blue = LED_FLASH_HARRY;
+        g_Status.led_status_blue = LED_OFF;
     }
     else if(g_Status.connect == MQTT_CONNECT)
     {
-        g_Status.led_status_blue = LED_FLASH;
+//        g_Status.led_status_blue = LED_FLASH;
+        g_Status.led_status_blue = LED_OFF;
     }
     else
     {
-        g_Status.led_status_blue = LED_ON;
+//        g_Status.led_status_blue = LED_ON;
+        g_Status.led_status_blue = LED_OFF;
     }
     
     
@@ -241,33 +244,32 @@ void Led_process(void *s)
         
         switch(g_Status.led_status_blue)
         {
-//            case LED_OFF:
-//            {
-//                LEDB(OFF);
-//                break;
-//            }
-//            case LED_ON:
-//            {
-//                LEDB(ON);
-//                break;
-//            }
-//            case LED_FLASH:
-//            {
-//                TrapTick[2]++;
-//                if(TrapTick[2] == 5)
-//                {
-//                    LEDB_turn();
-//                    TrapTick[2] = 0;
-//                }
-//                break;
-//            }
-//            case LED_FLASH_HARRY:
-//            {
-//                LEDB_turn();
-//                break;
-//            }
-            default:
+            case LED_OFF:
+            {
                 LEDB(OFF);
+                break;
+            }
+            case LED_ON:
+            {
+                LEDB(ON);
+                break;
+            }
+            case LED_FLASH:
+            {
+                TrapTick[2]++;
+                if(TrapTick[2] == 5)
+                {
+                    LEDB_turn();
+                    TrapTick[2] = 0;
+                }
+                break;
+            }
+            case LED_FLASH_HARRY:
+            {
+                LEDB_turn();
+                break;
+            }
+            default:
                 break;
         }
         
