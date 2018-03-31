@@ -12,6 +12,6 @@
 #define E_STOP_SWITCH_INCLUDE
 
 void E_STOP_init(void);
-int Check_estop(void);
+void Check_estop(void);
 
 #endif
