@@ -76,10 +76,22 @@ static void TIM2_Mode_Config(void)
   TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;	    //配置为PWM模式1
   TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;	
   
+  //PWM = 1000 ---> 60A   
+  
+  
   //  TIM_OCInitStructure.TIM_Pulse = 533;//g_SysConfig.m_PWMrate;//CCR1_Val; //设置跳变值，当计数器计数到这个值时，电平发生跳变   /*6666666666666666666666666666666666666*/
-//  TIM_OCInitStructure.TIM_Pulse = 133;         /8A
-  TIM_OCInitStructure.TIM_Pulse = 266;	    //16A
-//  TIM_OCInitStructure.TIM_Pulse = 533;        //32A
+//  TIM_OCInitStructure.TIM_Pulse = 100;         //6A
+//  TIM_OCInitStructure.TIM_Pulse = 116;         //7A
+//  TIM_OCInitStructure.TIM_Pulse = 133;         //8A
+//  TIM_OCInitStructure.TIM_Pulse = 150;         //9A
+//  TIM_OCInitStructure.TIM_Pulse = 166;         //10A
+//  TIM_OCInitStructure.TIM_Pulse = 183;         //11A
+//  TIM_OCInitStructure.TIM_Pulse = 200;         //12A
+//  TIM_OCInitStructure.TIM_Pulse = 216;         //13A
+//  TIM_OCInitStructure.TIM_Pulse = 233;         //14A
+//  TIM_OCInitStructure.TIM_Pulse = 250;         //15A
+  TIM_OCInitStructure.TIM_Pulse = 266;	     //16A
+//  TIM_OCInitStructure.TIM_Pulse = 533;         //32A
 
   TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;  //当定时器计数值小于CCR1_Val时为高电平
 

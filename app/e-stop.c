@@ -31,7 +31,7 @@ void E_STOP_init(void)
 //    rt_kprintf("\r\n~~ E4:%d ~~~~ E5:%d ~~\r\n", AA, BB);
 }
 
-int Check_estop(void)
+void Check_estop(void)
 {
     CC = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_4);
 //    DD = GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_5);
