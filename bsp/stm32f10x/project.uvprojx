@@ -683,6 +683,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\app\e-stop.c</FilePath>
             </File>
+            <File>
+              <FileName>stmflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\app\stmflash.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

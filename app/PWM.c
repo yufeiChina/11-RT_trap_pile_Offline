@@ -4,6 +4,7 @@
  *
 **********************************************************************************/
 #include "PWM.h"
+#include "Public.h"
 
 #define START_PWM_TIMER TIM_Cmd(TIM2, ENABLE)
 #define STOP_PWM_TIMER  TIM_Cmd(TIM2, DISABLE)
@@ -90,7 +91,7 @@ static void TIM2_Mode_Config(void)
 //  TIM_OCInitStructure.TIM_Pulse = 216;         //13A
 //  TIM_OCInitStructure.TIM_Pulse = 233;         //14A
 //  TIM_OCInitStructure.TIM_Pulse = 250;         //15A
-  TIM_OCInitStructure.TIM_Pulse = 266;	     //16A
+  TIM_OCInitStructure.TIM_Pulse = g_Status.PWM_Set;	        //16A
 //  TIM_OCInitStructure.TIM_Pulse = 533;         //32A
 
   TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;  //当定时器计数值小于CCR1_Val时为高电平
@@ -146,3 +147,5 @@ void TIM2_PWM_Init(void)
 	TIM2_Mode_Config();
     Stop_PWM();
 }
+
+

@@ -168,6 +168,7 @@ struct sd_status
     rt_tick_t               read_begin_energy;
     rt_tick_t               heat_time;
     
+    rt_uint16_t             PWM_Set;
 };
 extern struct sd_status g_Status;
 

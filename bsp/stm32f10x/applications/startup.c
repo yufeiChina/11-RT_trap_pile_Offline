@@ -80,29 +80,22 @@ void rtthread_startup(void)
 #endif /* RT_USING_HEAP */
 
     /* init scheduler system */
-    rt_system_scheduler_init();
-rt_kprintf("debug rt_system_scheduler_init!\n");
+    rt_system_scheduler_init(); 
 
     /* initialize timer */
-    rt_system_timer_init();
-rt_kprintf("debug rt_system_timer_init!\n");
+    rt_system_timer_init(); 
 
     /* init timer thread */
-    rt_system_timer_thread_init();
-    
-    rt_kprintf("debug rt_system_timer_thread_init!\n");
+    rt_system_timer_thread_init(); 
 
     /* init application */
-    rt_application_init();
-rt_kprintf("debug rt_application_init!\n");
+    rt_application_init(); 
 
     /* init idle thread */
-    rt_thread_idle_init();
-rt_kprintf("debug rt_thread_idle_init!\n");
+    rt_thread_idle_init(); 
 
     /* start scheduler */
-    rt_system_scheduler_start();
-rt_kprintf("debug rt_system_scheduler_start!\n");
+    rt_system_scheduler_start(); 
 
     /* never reach here */
     return ;
