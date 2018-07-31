@@ -29,23 +29,36 @@ void Check_Gun_Status()
 {
     //枪的状态
     if(GUN_TO_WAIT)
-    {
-        g_Status.gun_status = SD_GUN_ST_OUT;
-        g_Status.swipe_card = SWIPE_CARD_NO;
-        g_Status.svr_allow_suplly = SVR_ALLOW_SUPPLY_NO;
+    { 
+        rt_thread_delay(20);
+		if(GUN_TO_WAIT)
+		{
+			g_Status.gun_status = SD_GUN_ST_OUT; 
+		}
     }
     else if(GUN_TO_INPUT)
     {
-        g_Status.gun_status = SD_GUN_ST_CNCTING;
+        rt_thread_delay(20);
+		if(GUN_TO_INPUT)
+		{
+			g_Status.gun_status = SD_GUN_ST_CNCTING;
+		}
     }
     else if(GUN_TO_CONFIRM)
     {
-        g_Status.gun_status = SD_GUN_ST_CNCTOK;
+        rt_thread_delay(20);
+		if(GUN_TO_CONFIRM)
+		{
+			g_Status.gun_status = SD_GUN_ST_CNCTOK;
+		}
     } 
     else if(GUN_TO_ERR)
-    {
-        rt_kprintf("error error error error error error error error error error error error error error error error S_ERR_CP_VOL_LESS\r\n");
-        g_Status.sdst_error = S_ERR_CP_VOL_LESS;
+    { 
+        rt_thread_delay(20);
+		if(GUN_TO_ERR)
+		{
+			g_Status.sdst_error = S_ERR_CP_VOL_LESS;
+		}
     }
 }
 
@@ -67,12 +80,12 @@ void SupplyPower_entry(void *s)
 {    
     close_LN();
     power_gate_init();  //继电器初始化 GPIOD
-    E_STOP_init(); 
+	rt_thread_delay(10);
+    power_gate_init();  //继电器初始化 GPIOD
+//    E_STOP_init(); 
     while(1)
     {    
-        Check_Gun_Status();
-        //充电桩的状态
-        Check_estop();
+        Check_Gun_Status(); 
         
         switch (g_Status.supplypower)
         {
@@ -81,28 +94,19 @@ void SupplyPower_entry(void *s)
                 {
                     rt_kprintf("\r\n\tSPLPOWER(CP):Init->Wait,AD:%u.\r\n\r\n", AD_AVER_VALUE);
                     g_Status.supplypower = SPT_PILE_Wait;
-                    Stop_PWM();
-                    
-                    g_Status.charging_begin_time = 0;
-                    g_Status.charging_time = 0;
+                    Stop_PWM(); 
                 }
                 else if (g_Status.gun_status == SD_GUN_ST_CNCTING)
                 {
                     rt_kprintf("\r\n\tSPLPOWER(CP):Init->Input,AD:%u.\r\n\r\n", AD_AVER_VALUE);
                     g_Status.supplypower = SPT_PILE_Input;
-                    Start_PWM();
-                    
-                    g_Status.charging_begin_time = 0;
-                    g_Status.charging_time = 0;
+                    Start_PWM(); 
                 }
                 else if (g_Status.gun_status == SD_GUN_ST_CNCTOK)
                 {
                     rt_kprintf("\r\n\tSPLPOWER(CP):Init->Confirm,AD:%u.\r\n\r\n", AD_AVER_VALUE);
                     g_Status.supplypower = SPT_PILE_Confirm;
-                    Start_PWM();
-                    
-                    g_Status.charging_begin_time = 0;
-                    g_Status.charging_time = 0;
+                    Start_PWM(); 
                 }
                 break;
                 
@@ -111,15 +115,13 @@ void SupplyPower_entry(void *s)
                 {
                     rt_kprintf("\r\n\tSPLPOWER(CP):Wait->Input,AD:%u.\r\n\r\n", AD_AVER_VALUE);
                     g_Status.supplypower = SPT_PILE_Input;
-                    Start_PWM();
-                    
+                    Start_PWM(); 
                 }
                 else if (g_Status.gun_status == SD_GUN_ST_CNCTOK)
                 {
                     rt_kprintf("\r\n\tSPLPOWER(CP):Wait->Confirm,AD:%u.\r\n\r\n", AD_AVER_VALUE);
                     g_Status.supplypower = SPT_PILE_Confirm;
-                    Start_PWM();
-                    
+                    Start_PWM(); 
                 }
                 break;
                 
@@ -128,15 +130,13 @@ void SupplyPower_entry(void *s)
                 {
                     rt_kprintf("\r\n\tSPLPOWER(CP):Input->Wait,AD:%u.\r\n\r\n", AD_AVER_VALUE);
                     g_Status.supplypower = SPT_PILE_Wait;
-                    Stop_PWM();
-                    
+                    Stop_PWM(); 
                 }
                 else if (g_Status.gun_status == SD_GUN_ST_CNCTOK)
                 {
                     rt_kprintf("\r\n\tSPLPOWER(CP):Input->Confirm,AD:%u.\r\n\r\n", AD_AVER_VALUE);
                     g_Status.supplypower = SPT_PILE_Confirm;
-                    Start_PWM();
-                    
+                    Start_PWM(); 
                 }
                 break;
 
@@ -146,66 +146,51 @@ void SupplyPower_entry(void *s)
                 {
                     rt_kprintf("\r\n\tSPLPOWER(CP):Confirm->Wait,AD:%u.\r\n\r\n", AD_AVER_VALUE);
                     g_Status.supplypower = SPT_PILE_Wait;
-                    Stop_PWM();
-                    
+                    Stop_PWM(); 
                 }
                 else if (g_Status.gun_status == SD_GUN_ST_CNCTING)
                 {
                     rt_kprintf("\r\n\tSPLPOWER(CP):Confirm->Input,AD:%u.\r\n\r\n", AD_AVER_VALUE);
                     g_Status.supplypower = SPT_PILE_Input;
-                    Start_PWM();
-                    
+                    Start_PWM(); 
                 }
                 else 
-                {
-                    if (g_Status.sdst_error == S_ERR_ST_NO && g_Status.sdst_error1 == S_ERR_ST_NO)
-                    {
-                        rt_kprintf("\r\n\tSPLPOWER(CP):Confirm->Work,AD:%u.\r\n\r\n", AD_AVER_VALUE);
-                        g_Status.supplypower = SPT_PILE_Work;
-                        g_Status.charging_begin_time = rt_tick_get();     //获取开始充电的当前时间
-                        
-                        open_powergate();
-                        g_Status.relay_status = RELAY_ON;
-                        Start_PWM();
-                    }
+                { 
+					rt_kprintf("\r\n\tSPLPOWER(CP):Confirm->Work,AD:%u.\r\n\r\n", AD_AVER_VALUE);
+					g_Status.supplypower = SPT_PILE_Work; 
+					open_powergate(); 
+					Start_PWM(); 
                 }
                 break;
 
-            case SPT_PILE_Work:  //充电 
-                if (g_Status.relay_status != RELAY_ON)
-                {
-                    rt_kprintf("\r\n\tg_Status.relay_status != RELAY_ON \r\n\r\n");
-                    g_Status.supplypower = SPT_PILE_Over;
-                    Stop_PWM();
-                    close_powergate();
-                    g_Status.relay_status = RELAY_OFF;
-                }
-                
+            case SPT_PILE_Work:  //充电  
                 if (g_Status.gun_status == SD_GUN_ST_OUT)
                 {
                     rt_kprintf("\r\n\tSPLPOWER(CP):Work->Wait,AD:%u.\r\n\r\n", AD_AVER_VALUE);
                     g_Status.supplypower = SPT_PILE_Over;
+                    close_powergate(); 
                     Stop_PWM();
-                    close_powergate();
-                    g_Status.relay_status = RELAY_OFF;
                 }
                 break;
+				
             case SPT_PILE_Over:     //结束
-                {
-                    rt_thread_sleep(1000);
+                { 
                     rt_kprintf("\r\n\tSPLPOWER(CP):Over->Init,AD:%u.\r\n\r\n", AD_AVER_VALUE);
-                    g_Status.supplypower = SPT_PILE_Init;
-                    g_Status.svr_allow_suplly = SVR_ALLOW_SUPPLY_NO;
-                    g_Status.read_begin_energy = 0;
+                    g_Status.supplypower = SPT_PILE_Init; 
+                    close_powergate(); 
+                    Stop_PWM();
                 }
                 break;
+				
             default:
                 {
                     g_Status.supplypower = SPT_PILE_Wait;
+					close_powergate(); 
+                    Stop_PWM();
                     break;
                 }
         }
-        rt_thread_sleep(500);
+        rt_thread_delay(500);
     }
 }
 
